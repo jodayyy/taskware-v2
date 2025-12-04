@@ -1,27 +1,30 @@
 /* Theme CSS - Global styles used on all pages */
 
 :root {
-    /* Color Palette */
-    --color-primary: #1b1b18;
-    --color-primary-light: #3e3e3a;
-    --color-primary-dark: #0a0a0a;
+    /* Color Palette - Light & Minimalistic */
+    --color-primary: #4a90e2;
+    --color-primary-light: #6ba8e8;
+    --color-primary-dark: #357abd;
     
-    --color-secondary: #706f6c;
-    --color-secondary-light: #a1a09a;
-    --color-secondary-dark: #3e3e3a;
+    --color-secondary: #9ca3af;
+    --color-secondary-light: #d1d5db;
+    --color-secondary-dark: #6b7280;
     
-    --color-background: #fdfdfc;
-    --color-background-dark: #161615;
+    --color-background: #ffffff;
+    --color-background-alt: #f9fafb;
     
-    --color-border: #e3e3e0;
-    --color-border-dark: #3e3e3a;
+    --color-border: #e5e7eb;
+    --color-border-light: #f3f4f6;
     
-    --color-text: #1b1b18;
-    --color-text-light: #706f6c;
-    --color-text-dark: #ededec;
+    --color-text: #374151;
+    --color-text-light: #6b7280;
+    --color-text-lighter: #9ca3af;
     
-    --color-error: #f53003;
-    --color-error-dark: #f61500;
+    --color-error: #ef4444;
+    --color-error-light: #fee2e2;
+    
+    --color-success: #10b981;
+    --color-success-light: #d1fae5;
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -31,33 +34,21 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
     
-    /* Border Radius */
+    /* Border Radius - Minimal */
     --radius-sm: 0.25rem;
     --radius-md: 0.375rem;
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     
-    /* Shadows */
-    --shadow-sm: 0px 0px 1px 0px rgba(0, 0, 0, 0.03), 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0px 0px 1px 0px rgba(0, 0, 0, 0.03), 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0px 0px 1px 0px rgba(0, 0, 0, 0.03), 0px 4px 8px 0px rgba(0, 0, 0, 0.12);
+    /* Shadows - Subtle & Minimal */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     
     /* Transitions */
     --transition-fast: 150ms ease-in-out;
     --transition-normal: 250ms ease-in-out;
     --transition-slow: 350ms ease-in-out;
-}
-
-/* Dark mode color overrides */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-background: #0a0a0a;
-        --color-background-dark: #161615;
-        --color-border: #3e3e3a;
-        --color-border-dark: #62605b;
-        --color-text: #ededec;
-        --color-text-light: #a1a09a;
-    }
 }
 
 /* Base styles */
@@ -67,11 +58,13 @@
 
 body {
     font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-    background-color: var(--color-background);
+    background-color: var(--color-background-alt);
     color: var(--color-text);
-    line-height: 1.5;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
 }
 
 /* Utility classes */
@@ -95,22 +88,23 @@ body {
 }
 
 .bg-secondary {
-    background-color: var(--color-background-dark);
+    background-color: var(--color-background-alt);
 }
 
 .border-primary {
     border-color: var(--color-border);
 }
 
-/* Focus styles */
+/* Focus styles - Minimal */
 :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+    outline-width: 2px;
 }
 
 /* Selection styles */
 ::selection {
     background-color: var(--color-primary);
-    color: var(--color-background);
+    color: #ffffff;
 }
 
