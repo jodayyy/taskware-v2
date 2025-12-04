@@ -1,9 +1,9 @@
 /* Dashboard Component Styles */
 
 .dashboard-container {
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: var(--spacing-md);
 }
 
 .dashboard-content {
@@ -27,4 +27,3 @@
     color: var(--color-text-light);
     margin: 0;
 }
-

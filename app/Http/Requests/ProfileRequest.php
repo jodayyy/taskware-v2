@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,14 +22,27 @@ class RegisterRequest extends FormRequest
      */
     public function rules(): array
     {
+        $user = $this->user();
+
         return [
-            'username' => ['required', 'string', 'min:3', 'max:255', 'unique:users,username'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => [
+            'username' => [
                 'required',
                 'string',
+                'min:3',
+                'max:255',
+                Rule::unique('users', 'username')->ignore($user->id),
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($user->id),
+            ],
+            'password' => [
+                'nullable',
+                'string',
                 'min:8',
-                'confirmed',
                 'regex:/[a-z]/',      // at least one lowercase letter
                 'regex:/[A-Z]/',      // at least one uppercase letter
                 'regex:/[0-9]/',      // at least one digit
