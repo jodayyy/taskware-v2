@@ -23,68 +23,40 @@
                     @endif
                 </div>
 
-                @if ($errors->any())
-                    <div class="auth-error">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <x-ui.error-list :errors="$errors" />
 
                 <form method="POST" action="{{ route('profile.update') }}" class="profile-form" id="profileForm">
                     @csrf
                     @method('PUT')
 
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input 
-                            type="text" 
-                            id="username" 
-                            name="username" 
-                            class="form-input @error('username') form-input-error @enderror" 
-                            value="{{ old('username', $user->username) }}" 
-                            required 
-                            minlength="3"
-                            {{ !isset($editMode) || !$editMode ? 'readonly' : '' }}
-                        >
-                        @error('username')
-                            <span class="form-error">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <x-ui.form-input 
+                        name="username" 
+                        label="Username" 
+                        :value="old('username', $user->username)"
+                        minlength="3"
+                        required
+                        :readonly="!isset($editMode) || !$editMode"
+                    />
 
-                    <div class="form-group mt-2">
-                        <label for="email" class="form-label">Email</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            class="form-input @error('email') form-input-error @enderror" 
-                            value="{{ old('email', $user->email) }}" 
-                            required
-                            {{ !isset($editMode) || !$editMode ? 'readonly' : '' }}
-                        >
-                        @error('email')
-                            <span class="form-error">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <x-ui.form-input 
+                        name="email" 
+                        label="Email" 
+                        type="email"
+                        :value="old('email', $user->email)"
+                        required
+                        :readonly="!isset($editMode) || !$editMode"
+                        class="mt-2"
+                    />
 
-                    <div class="form-group mt-2">
-                        <label for="password" class="form-label">Password</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            class="form-input @error('password') form-input-error @enderror" 
-                            placeholder="{{ !isset($editMode) || !$editMode ? 'Leave blank to keep current password' : 'Enter new password (optional)' }}"
-                            minlength="8"
-                            {{ !isset($editMode) || !$editMode ? 'readonly' : '' }}
-                        >
-                        @error('password')
-                            <span class="form-error">{{ $message }}</span>
-                        @enderror
-                        
+                    <x-ui.form-input 
+                        name="password" 
+                        label="Password" 
+                        type="password"
+                        :placeholder="(!isset($editMode) || !$editMode) ? 'Leave blank to keep current password' : 'Enter new password (optional)'"
+                        minlength="8"
+                        :readonly="!isset($editMode) || !$editMode"
+                        class="mt-2"
+                    >
                         @if(isset($editMode) && $editMode)
                             <div class="password-requirements">
                                 <p class="password-requirements-title">Password must contain:</p>
@@ -112,10 +84,10 @@
                                 </ul>
                             </div>
                         @endif
-                    </div>
+                    </x-ui.form-input>
 
 
-                    <div class="profile-actions" id="profileActions" style="display: {{ isset($editMode) && $editMode ? 'flex' : 'none' }};">
+                    <div class="profile-actions {{ isset($editMode) && $editMode ? 'visible' : '' }}" id="profileActions">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                         <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
                     </div>
@@ -168,65 +140,31 @@ function enableEditMode() {
         passwordGroup.insertAdjacentHTML('beforeend', requirementsHTML);
     }
     
-    document.getElementById('profileActions').style.display = 'flex';
-    document.querySelector('.profile-header button').style.display = 'none';
+    document.getElementById('profileActions').classList.add('visible');
+    const editButton = document.querySelector('.profile-header button');
+    if (editButton) {
+        editButton.style.display = 'none';
+    }
     
     // Initialize password validation
-    initializePasswordValidation();
+    if (window.passwordValidation) {
+        window.passwordValidation.initializePasswordValidation('password');
+    }
 }
 
 function cancelEdit() {
     window.location.reload();
 }
 
-function checkPasswordRequirements(password) {
-    const requirements = {
-        uppercase: /[A-Z]/.test(password),
-        lowercase: /[a-z]/.test(password),
-        number: /[0-9]/.test(password),
-        special: /[^A-Za-z0-9]/.test(password),
-        length: password.length >= 8
-    };
-
-    // Update requirement indicators
-    const reqUppercase = document.getElementById('req-uppercase');
-    const reqLowercase = document.getElementById('req-lowercase');
-    const reqNumber = document.getElementById('req-number');
-    const reqSpecial = document.getElementById('req-special');
-    const reqLength = document.getElementById('req-length');
-    
-    if (reqUppercase) reqUppercase.classList.toggle('requirement-met', requirements.uppercase);
-    if (reqLowercase) reqLowercase.classList.toggle('requirement-met', requirements.lowercase);
-    if (reqNumber) reqNumber.classList.toggle('requirement-met', requirements.number);
-    if (reqSpecial) reqSpecial.classList.toggle('requirement-met', requirements.special);
-    if (reqLength) reqLength.classList.toggle('requirement-met', requirements.length);
-
-    return Object.values(requirements).every(req => req === true);
-}
-
-function initializePasswordValidation() {
-    const passwordInput = document.getElementById('password');
-    
-    if (passwordInput) {
-        passwordInput.addEventListener('input', function() {
-            if (this.value.length > 0) {
-                checkPasswordRequirements(this.value);
-            } else {
-                // Reset all requirements if password is empty
-                ['req-uppercase', 'req-lowercase', 'req-number', 'req-special', 'req-length'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.classList.remove('requirement-met');
-                });
-            }
-        });
-    }
-}
+// Make functions globally available
+window.enableEditMode = enableEditMode;
+window.cancelEdit = cancelEdit;
 
 document.addEventListener('DOMContentLoaded', function() {
     // If page loads in edit mode, initialize validation
     const passwordInput = document.getElementById('password');
-    if (passwordInput && !passwordInput.hasAttribute('readonly')) {
-        initializePasswordValidation();
+    if (passwordInput && !passwordInput.hasAttribute('readonly') && window.passwordValidation) {
+        window.passwordValidation.initializePasswordValidation('password');
     }
 });
 </script>

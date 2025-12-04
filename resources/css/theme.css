@@ -12,6 +12,7 @@
     
     --color-background: #ffffff;
     --color-background-alt: #f9fafb;
+    --color-background-secondary: #f3f4f6;
     
     --color-border: #e5e7eb;
     --color-border-light: #f3f4f6;
@@ -67,33 +68,7 @@ body {
     padding: 0;
 }
 
-/* Utility classes */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
-}
-
-.text-primary {
-    color: var(--color-text);
-}
-
-.text-secondary {
-    color: var(--color-text-light);
-}
-
-.bg-primary {
-    background-color: var(--color-background);
-}
-
-.bg-secondary {
-    background-color: var(--color-background-alt);
-}
-
-.border-primary {
-    border-color: var(--color-border);
-}
+/* Utility classes - Use Tailwind utilities instead */
 
 /* Focus styles - Minimal */
 :focus-visible {

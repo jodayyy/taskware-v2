@@ -7,65 +7,35 @@
     <div class="auth-card">
         <h1 class="auth-title">Register</h1>
 
-        @if ($errors->any())
-            <div class="auth-error">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <x-ui.error-list :errors="$errors" />
 
         <form method="POST" action="{{ route('register') }}" class="auth-form" id="registerForm">
             @csrf
 
-            <div class="form-group">
-                <label for="username" class="form-label">Username</label>
-                <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    class="form-input @error('username') form-input-error @enderror" 
-                    value="{{ old('username') }}" 
-                    required 
-                    autofocus
-                    minlength="3"
-                >
-                @error('username')
-                    <span class="form-error">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-ui.form-input 
+                name="username" 
+                label="Username" 
+                :value="old('username')"
+                minlength="3"
+                required 
+                autofocus
+            />
 
-            <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    class="form-input @error('email') form-input-error @enderror" 
-                    value="{{ old('email') }}" 
-                    required
-                >
-                @error('email')
-                    <span class="form-error">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-ui.form-input 
+                name="email" 
+                label="Email" 
+                type="email"
+                :value="old('email')"
+                required
+            />
 
-            <div class="form-group">
-                <label for="password" class="form-label">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    class="form-input @error('password') form-input-error @enderror" 
-                    required
-                    minlength="8"
-                >
-                @error('password')
-                    <span class="form-error">{{ $message }}</span>
-                @enderror
-                
+            <x-ui.form-input 
+                name="password" 
+                label="Password" 
+                type="password"
+                minlength="8"
+                required
+            >
                 <div class="password-requirements">
                     <p class="password-requirements-title">Password must contain:</p>
                     <ul class="password-requirements-list">
@@ -91,22 +61,16 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </x-ui.form-input>
 
-            <div class="form-group">
-                <label for="password_confirmation" class="form-label">Confirm Password</label>
-                <input 
-                    type="password" 
-                    id="password_confirmation" 
-                    name="password_confirmation" 
-                    class="form-input @error('password_confirmation') form-input-error @enderror" 
-                    required
-                >
-                @error('password_confirmation')
-                    <span class="form-error">{{ $message }}</span>
-                @enderror
+            <x-ui.form-input 
+                name="password_confirmation" 
+                label="Confirm Password" 
+                type="password"
+                required
+            >
                 <div id="password-match" class="password-match"></div>
-            </div>
+            </x-ui.form-input>
 
             <button type="submit" class="btn btn-primary btn-block">Register</button>
         </form>
@@ -116,57 +80,4 @@
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('password_confirmation');
-    const passwordMatch = document.getElementById('password-match');
-
-    function checkPasswordRequirements(password) {
-        const requirements = {
-            uppercase: /[A-Z]/.test(password),
-            lowercase: /[a-z]/.test(password),
-            number: /[0-9]/.test(password),
-            special: /[^A-Za-z0-9]/.test(password),
-            length: password.length >= 8
-        };
-
-        // Update requirement indicators
-        document.getElementById('req-uppercase').classList.toggle('requirement-met', requirements.uppercase);
-        document.getElementById('req-lowercase').classList.toggle('requirement-met', requirements.lowercase);
-        document.getElementById('req-number').classList.toggle('requirement-met', requirements.number);
-        document.getElementById('req-special').classList.toggle('requirement-met', requirements.special);
-        document.getElementById('req-length').classList.toggle('requirement-met', requirements.length);
-
-        return Object.values(requirements).every(req => req === true);
-    }
-
-    function checkPasswordMatch() {
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        if (confirmPassword.length === 0) {
-            passwordMatch.textContent = '';
-            passwordMatch.className = 'password-match';
-            return;
-        }
-
-        if (password === confirmPassword) {
-            passwordMatch.textContent = '✓ Passwords match';
-            passwordMatch.className = 'password-match password-match-success';
-        } else {
-            passwordMatch.textContent = '✗ Passwords do not match';
-            passwordMatch.className = 'password-match password-match-error';
-        }
-    }
-
-    passwordInput.addEventListener('input', function() {
-        checkPasswordRequirements(this.value);
-        checkPasswordMatch();
-    });
-
-    confirmPasswordInput.addEventListener('input', checkPasswordMatch);
-});
-</script>
 @endsection

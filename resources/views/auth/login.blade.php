@@ -7,48 +7,25 @@
     <div class="auth-card">
         <h1 class="auth-title">Login</h1>
 
-        @if ($errors->any())
-            <div class="auth-error">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <x-ui.error-list :errors="$errors" />
 
         <form method="POST" action="{{ route('login') }}" class="auth-form">
             @csrf
 
-            <div class="form-group">
-                <label for="username" class="form-label">Username</label>
-                <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    class="form-input @error('username') form-input-error @enderror" 
-                    value="{{ old('username') }}" 
-                    required 
-                    autofocus
-                >
-                @error('username')
-                    <span class="form-error">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-ui.form-input 
+                name="username" 
+                label="Username" 
+                :value="old('username')"
+                required 
+                autofocus
+            />
 
-            <div class="form-group">
-                <label for="password" class="form-label">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    class="form-input @error('password') form-input-error @enderror" 
-                    required
-                >
-                @error('password')
-                    <span class="form-error">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-ui.form-input 
+                name="password" 
+                label="Password" 
+                type="password"
+                required
+            />
 
             <div class="form-group">
                 <label class="form-checkbox">

@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -36,7 +37,7 @@ class ProfileController extends Controller
         ];
         
         if ($request->filled('password')) {
-            $updateData['password'] = $request->password;
+            $updateData['password'] = Hash::make($request->password);
         }
         
         $user->update($updateData);
