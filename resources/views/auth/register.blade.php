@@ -38,6 +38,21 @@
             </div>
 
             <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input @error('email') form-input-error @enderror" 
+                    value="{{ old('email') }}" 
+                    required
+                >
+                @error('email')
+                    <span class="form-error">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="password" class="form-label">Password</label>
                 <input 
                     type="password" 
