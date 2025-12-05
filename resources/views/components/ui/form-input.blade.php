@@ -40,4 +40,3 @@
     @enderror
     {{ $slot }}
 </div>
-

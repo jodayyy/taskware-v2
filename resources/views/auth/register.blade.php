@@ -80,4 +80,14 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize password validation
+    if (window.passwordValidation) {
+        window.passwordValidation.initializePasswordValidation('password');
+        window.passwordValidation.initializePasswordMatch('password', 'password_confirmation', 'password-match');
+    }
+});
+</script>
 @endsection
