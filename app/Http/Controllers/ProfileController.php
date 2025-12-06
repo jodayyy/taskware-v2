@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -36,12 +37,30 @@ class ProfileController extends Controller
             'email' => $request->email,
         ];
         
-        if ($request->filled('password')) {
-            $updateData['password'] = Hash::make($request->password);
-        }
-        
         $user->update($updateData);
 
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
+    }
+
+    /**
+     * Show the change password form.
+     */
+    public function showChangePassword(): View
+    {
+        return view('change-password');
+    }
+
+    /**
+     * Update the user's password.
+     */
+    public function updatePassword(ChangePasswordRequest $request): RedirectResponse
+    {
+        $user = Auth::user();
+        
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('profile.show')->with('success', 'Password changed successfully!');
     }
 }

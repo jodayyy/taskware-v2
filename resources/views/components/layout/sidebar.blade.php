@@ -1,10 +1,4 @@
 <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
-            <x-icons.menu />
-        </button>
-        <h2 class="sidebar-brand">Taskware</h2>
-    </div>
     <nav class="sidebar-nav">
         <a href="{{ route('dashboard') }}" class="sidebar-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <x-icons.dashboard />

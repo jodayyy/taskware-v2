@@ -1,19 +1,24 @@
-/* Auth Component Styles - Using Tailwind utilities where possible */
+/* Auth Component Styles - RETRO DESIGN */
 
 .auth-container {
-    @apply min-h-screen flex items-center justify-center py-8 px-4 bg-white;
+    @apply min-h-screen flex items-center justify-center py-8 px-4;
+    background-color: var(--color-background-alt);
+    background-image: radial-gradient(circle, var(--color-text-lighter) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
 }
 
 .auth-card {
-    @apply w-full max-w-md bg-white border border-gray-200 rounded-lg p-8 shadow-sm;
+    @apply w-full max-w-md bg-white border-2 border-black rounded-none p-6;
+    box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .auth-title {
-    @apply text-3xl font-medium text-gray-700 mb-8 text-center tracking-tight;
+    @apply text-3xl font-bold text-black mb-6 text-center tracking-tight;
 }
 
 .auth-form {
-    @apply flex flex-col gap-6;
+    @apply flex flex-col gap-4;
 }
 
 .form-group {
@@ -21,42 +26,40 @@
 }
 
 .form-label {
-    @apply text-sm font-medium text-gray-700;
+    @apply text-sm font-bold text-black;
 }
 
 .form-input {
-    @apply py-2 px-4 border border-gray-200 rounded-md text-base bg-white text-gray-700;
+    @apply py-2 px-4 border-2 border-black rounded-none text-base bg-white text-black;
     @apply transition-all duration-150;
 }
 
 .form-input:focus {
-    @apply outline-none border-blue-500;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    @apply outline-none border-blue-600;
 }
 
 .form-input-error {
-    @apply border-red-500;
+    @apply border-red-600;
 }
 
 .form-input-error:focus {
-    @apply border-red-500;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    @apply border-red-600;
 }
 
 .form-error {
-    @apply text-sm text-red-500;
+    @apply text-sm text-red-600 font-bold;
 }
 
 .form-checkbox {
-    @apply flex items-center gap-2 cursor-pointer text-sm text-gray-700;
+    @apply flex items-center gap-2 cursor-pointer text-sm text-black font-medium;
 }
 
 .form-checkbox input[type="checkbox"] {
-    @apply w-4 h-4 cursor-pointer;
+    @apply w-4 h-4 cursor-pointer border-2 border-black rounded-none;
 }
 
 .btn {
-    @apply py-2 px-4 border-none rounded-md text-base font-medium cursor-pointer;
+    @apply py-2 px-4 border-2 border-black rounded-none text-base font-bold cursor-pointer;
     @apply transition-all duration-150 inline-flex items-center justify-center;
 }
 
@@ -66,35 +69,45 @@
 }
 
 .btn-primary {
-    @apply bg-blue-500 text-white;
+    @apply bg-blue-300 text-black;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .btn-primary:hover:not(:disabled) {
-    @apply bg-blue-600 shadow-sm;
+    @apply bg-blue-400;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .btn-primary:active:not(:disabled) {
-    @apply scale-[0.98] shadow-none;
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .btn-primary:focus-visible {
-    @apply outline-2 outline-blue-500 outline-offset-2;
+    @apply outline-3 outline-blue-300 outline-offset-2;
+    outline-width: 3px;
 }
 
 .btn-secondary {
-    @apply bg-gray-400 text-white;
+    @apply bg-red-300 text-black;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    @apply bg-gray-500 shadow-sm;
+    @apply bg-red-400;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .btn-secondary:active:not(:disabled) {
-    @apply scale-[0.98] shadow-none;
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .btn-secondary:focus-visible {
-    @apply outline-2 outline-gray-400 outline-offset-2;
+    @apply outline-3 outline-red-300 outline-offset-2;
+    outline-width: 3px;
 }
 
 .btn-block {
@@ -102,19 +115,20 @@
 }
 
 .auth-error {
-    @apply bg-red-50 border border-red-500 rounded-md p-4 mb-6;
+    @apply bg-red-100 border-2 border-red-600 rounded-none p-4 mb-4;
+    box-shadow: 4px 4px 0px 0px rgba(204, 0, 0, 1);
 }
 
 .auth-error ul {
-    @apply m-0 pl-6 text-red-500 text-sm;
+    @apply m-0 pl-6 text-red-600 text-sm font-bold;
 }
 
 .auth-footer {
-    @apply mt-6 text-center text-sm text-gray-500;
+    @apply mt-4 text-center text-sm text-black font-medium;
 }
 
 .auth-link {
-    @apply text-blue-500 no-underline font-medium;
+    @apply text-blue-600 no-underline font-bold;
 }
 
 .auth-link:hover {
@@ -123,11 +137,11 @@
 
 /* Password Requirements Styles */
 .password-requirements {
-    @apply mt-2 p-4 bg-gray-50 border border-gray-200 rounded-md;
+    @apply mt-2 p-3 bg-gray-50 border-2 border-gray-400 rounded-none;
 }
 
 .password-requirements-title {
-    @apply text-sm font-medium text-gray-700 mb-2;
+    @apply text-sm font-bold text-black mb-2;
 }
 
 .password-requirements-list {
@@ -135,29 +149,29 @@
 }
 
 .password-requirement {
-    @apply flex items-center gap-2 text-xs text-gray-500 transition-colors duration-150;
+    @apply flex items-center gap-2 text-xs text-black transition-colors duration-150 font-medium;
 }
 
 .password-requirement.requirement-met {
-    @apply text-green-500;
+    @apply text-green-600;
 }
 
 .requirement-icon {
-    @apply text-sm w-4 inline-block text-center;
+    @apply text-sm w-4 inline-block text-center font-bold;
 }
 
 .password-requirement.requirement-met .requirement-icon {
-    @apply text-green-500;
+    @apply text-green-600;
 }
 
 .password-match {
-    @apply mt-1 text-sm font-medium;
+    @apply mt-1 text-sm font-bold;
 }
 
 .password-match-success {
-    @apply text-green-500;
+    @apply text-green-600;
 }
 
 .password-match-error {
-    @apply text-red-500;
+    @apply text-red-600;
 }
