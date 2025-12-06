@@ -9,8 +9,8 @@
         </div>
         
         <div class="main-content-area">
-            <div class="dashboard-container">
-                <div class="dashboard-content">
+            <div class="main-content-container">
+                <div class="main-content">
                     {{ $slot }}
                 </div>
             </div>

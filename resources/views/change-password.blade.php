@@ -5,7 +5,7 @@
 @section('content')
 <x-layout.page>
                 <div class="profile-header">
-        <h1 class="dashboard-title">Change Password</h1>
+        <h1 class="main-content-title">Change Password</h1>
                 </div>
 
                 <form method="POST" action="{{ route('profile.password.update') }}" class="profile-form" id="changePasswordForm">

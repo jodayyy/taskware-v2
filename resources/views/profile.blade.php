@@ -5,7 +5,7 @@
 @section('content')
 <x-layout.page>
                 <div class="profile-header">
-        <h1 class="dashboard-title">{{ isset($editMode) && $editMode ? 'Edit Profile' : 'Profile' }}</h1>
+        <h1 class="main-content-title">{{ isset($editMode) && $editMode ? 'Edit Profile' : 'Profile' }}</h1>
                 </div>
 
                 <form method="POST" action="{{ route('profile.update') }}" class="profile-form" id="profileForm">

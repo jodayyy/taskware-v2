@@ -15,7 +15,7 @@ export function enableEditMode() {
     }
     
     // Update title
-    const title = document.querySelector('.dashboard-title');
+    const title = document.querySelector('.main-content-title');
     if (title) {
         title.textContent = 'Edit Profile';
     }

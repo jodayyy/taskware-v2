@@ -3,7 +3,7 @@
 @import './background.css';
 @import './components.css';
 @import './auth.css';
-@import './dashboard.css';
+@import './main-content.css';
 @import './profile.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
