@@ -8,6 +8,10 @@
     @apply flex gap-2;
 }
 
+.profile-bottom-actions {
+    @apply flex gap-2 justify-end mt-8;
+}
+
 .profile-form {
     @apply w-full;
 }
@@ -25,8 +29,9 @@
 }
 
 .alert {
-    @apply p-4 rounded-none mb-4 border-2;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    @apply p-4 rounded-none mb-4;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
 }
 
 .alert-success {

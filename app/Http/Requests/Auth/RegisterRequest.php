@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Auth;
 
+use App\Http\Requests\Concerns\ValidatesPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
 {
+    use ValidatesPassword;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -24,16 +29,7 @@ class RegisterRequest extends FormRequest
         return [
             'username' => ['required', 'string', 'min:3', 'max:255', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'confirmed',
-                'regex:/[a-z]/',      // at least one lowercase letter
-                'regex:/[A-Z]/',      // at least one uppercase letter
-                'regex:/[0-9]/',      // at least one digit
-                'regex:/[^A-Za-z0-9]/', // at least one special character
-            ],
+            'password' => $this->passwordRules(),
         ];
     }
 
@@ -45,7 +41,7 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            'password.regex' => $this->passwordMessage(),
         ];
     }
 }

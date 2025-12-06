@@ -31,12 +31,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('dashboard'))->with('success', 'You have successfully logged in.');
         }
 
-        return back()->withErrors([
+        return back()
+            ->withErrors([
             'username' => 'The provided credentials do not match our records.',
-        ])->onlyInput('username');
+            ])
+            ->onlyInput('username');
     }
 
     /**
@@ -46,8 +48,8 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
+        session()->invalidate();
+        session()->regenerateToken();
 
         return redirect()->route('login');
     }

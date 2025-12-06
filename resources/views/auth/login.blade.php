@@ -7,8 +7,6 @@
     <div class="auth-card">
         <h1 class="auth-title">Login</h1>
 
-        <x-ui.error-list :errors="$errors" />
-
         <form method="POST" action="{{ route('login') }}" class="auth-form">
             @csrf
 

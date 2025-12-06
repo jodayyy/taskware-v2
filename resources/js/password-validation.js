@@ -3,27 +3,28 @@
  * Shared password validation logic for registration and profile forms
  */
 
+const requirementConfig = [
+    { key: 'uppercase', pattern: /[A-Z]/, id: 'req-uppercase' },
+    { key: 'lowercase', pattern: /[a-z]/, id: 'req-lowercase' },
+    { key: 'number', pattern: /[0-9]/, id: 'req-number' },
+    { key: 'special', pattern: /[^A-Za-z0-9]/, id: 'req-special' },
+    { key: 'length', pattern: null, id: 'req-length', check: (pwd) => pwd.length >= 8 }
+];
+
 export function checkPasswordRequirements(password) {
-    const requirements = {
-        uppercase: /[A-Z]/.test(password),
-        lowercase: /[a-z]/.test(password),
-        number: /[0-9]/.test(password),
-        special: /[^A-Za-z0-9]/.test(password),
-        length: password.length >= 8
-    };
+    const requirements = {};
+    
+    requirementConfig.forEach(({ key, pattern, check }) => {
+        requirements[key] = check ? check(password) : pattern.test(password);
+    });
 
     // Update requirement indicators
-    const reqUppercase = document.getElementById('req-uppercase');
-    const reqLowercase = document.getElementById('req-lowercase');
-    const reqNumber = document.getElementById('req-number');
-    const reqSpecial = document.getElementById('req-special');
-    const reqLength = document.getElementById('req-length');
-    
-    if (reqUppercase) reqUppercase.classList.toggle('requirement-met', requirements.uppercase);
-    if (reqLowercase) reqLowercase.classList.toggle('requirement-met', requirements.lowercase);
-    if (reqNumber) reqNumber.classList.toggle('requirement-met', requirements.number);
-    if (reqSpecial) reqSpecial.classList.toggle('requirement-met', requirements.special);
-    if (reqLength) reqLength.classList.toggle('requirement-met', requirements.length);
+    requirementConfig.forEach(({ id, key }) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.toggle('requirement-met', requirements[key]);
+        }
+    });
 
     return Object.values(requirements).every(req => req === true);
 }
@@ -37,7 +38,7 @@ export function initializePasswordValidation(passwordInputId) {
                 checkPasswordRequirements(this.value);
             } else {
                 // Reset all requirements if password is empty
-                ['req-uppercase', 'req-lowercase', 'req-number', 'req-special', 'req-length'].forEach(id => {
+                requirementConfig.forEach(({ id }) => {
                     const el = document.getElementById(id);
                     if (el) el.classList.remove('requirement-met');
                 });
@@ -64,13 +65,9 @@ export function checkPasswordMatch(passwordInputId, confirmPasswordInputId, matc
         return;
     }
 
-    if (password === confirmPassword) {
-        passwordMatch.textContent = '✓ Passwords match';
-        passwordMatch.className = 'password-match password-match-success';
-    } else {
-        passwordMatch.textContent = '✗ Passwords do not match';
-        passwordMatch.className = 'password-match password-match-error';
-    }
+    const isMatch = password === confirmPassword;
+    passwordMatch.textContent = isMatch ? '✓ Passwords match' : '✗ Passwords do not match';
+    passwordMatch.className = `password-match ${isMatch ? 'password-match-success' : 'password-match-error'}`;
 }
 
 export function initializePasswordMatch(passwordInputId, confirmPasswordInputId, matchIndicatorId) {
@@ -78,10 +75,7 @@ export function initializePasswordMatch(passwordInputId, confirmPasswordInputId,
     const confirmPasswordInput = document.getElementById(confirmPasswordInputId);
 
     if (passwordInput && confirmPasswordInput) {
-        const updateMatch = () => {
-            checkPasswordMatch(passwordInputId, confirmPasswordInputId, matchIndicatorId);
-        };
-
+        const updateMatch = () => checkPasswordMatch(passwordInputId, confirmPasswordInputId, matchIndicatorId);
         passwordInput.addEventListener('input', updateMatch);
         confirmPasswordInput.addEventListener('input', updateMatch);
     }

@@ -49,6 +49,8 @@
     --shadow-sm: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     --shadow-md: 6px 6px 0px 0px rgba(0, 0, 0, 1);
     --shadow-lg: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+    --shadow-xs: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    --shadow-hover: 2px 2px 0px 0px rgba(0, 0, 0, 1);
     
     /* Transitions */
     --transition-fast: 100ms ease-in-out;
@@ -56,20 +58,50 @@
     --transition-slow: 300ms ease-in-out;
 }
 
+/* Common utility classes for retro button effects */
+.retro-shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.retro-shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.retro-shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.retro-hover-effect:hover:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.retro-active-effect:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+.retro-border {
+    border: 2px solid var(--color-border);
+}
+
+.retro-card {
+    @apply bg-white rounded-none;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+}
+
 /* Base styles */
 * {
-    box-sizing: border-box;
+    @apply box-border;
 }
 
 body {
+    @apply font-sans bg-[var(--color-background-alt)] text-[var(--color-text)];
+    @apply leading-normal m-0 p-0;
     font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
-    background-color: var(--color-background-alt);
-    color: var(--color-text);
-    line-height: 1.6;
     -webkit-font-smoothing: none;
     -moz-osx-font-smoothing: grayscale;
-    margin: 0;
-    padding: 0;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
@@ -79,13 +111,10 @@ body {
 
 /* Focus styles - Retro Bold */
 :focus-visible {
-    outline: 3px solid var(--color-primary);
-    outline-offset: 2px;
-    outline-width: 3px;
+    @apply outline-[3px] outline-[var(--color-primary)] outline-offset-2;
 }
 
 /* Selection styles */
 ::selection {
-    background-color: var(--color-primary);
-    color: #ffffff;
+    @apply bg-[var(--color-primary)] text-white;
 }

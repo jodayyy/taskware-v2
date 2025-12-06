@@ -7,21 +7,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile.
+     * Display the user's profile with edit mode if validation failed.
      */
     public function show(): View
     {
-        $user = Auth::user();
+        $editMode = old('_method') === 'PUT' || request()->has('edit');
         
         return view('profile', [
-            'user' => $user,
+            'user' => auth()->user(),
+            'editMode' => $editMode,
         ]);
     }
 
@@ -30,14 +30,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request): RedirectResponse
     {
-        $user = Auth::user();
-        
-        $updateData = [
-            'username' => $request->username,
-            'email' => $request->email,
-        ];
-        
-        $user->update($updateData);
+        auth()->user()->update($request->only(['username', 'email']));
 
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
     }
@@ -55,9 +48,7 @@ class ProfileController extends Controller
      */
     public function updatePassword(ChangePasswordRequest $request): RedirectResponse
     {
-        $user = Auth::user();
-        
-        $user->update([
+        auth()->user()->update([
             'password' => Hash::make($request->password),
         ]);
 

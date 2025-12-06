@@ -9,8 +9,9 @@
 }
 
 .auth-card {
-    @apply w-full max-w-md bg-white border-2 border-black rounded-none p-6;
-    box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+    @apply w-full max-w-md p-6 bg-white rounded-none;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
 }
 
 .auth-title {
@@ -30,8 +31,9 @@
 }
 
 .form-input {
-    @apply py-2 px-4 border-2 border-black rounded-none text-base bg-white text-black;
+    @apply py-2 px-4 rounded-none text-base bg-white text-black;
     @apply transition-all duration-150;
+    border: 2px solid var(--color-border);
 }
 
 .form-input:focus {
@@ -46,6 +48,46 @@
     @apply border-red-600;
 }
 
+/* Password Input Wrapper with Toggle */
+.password-input-wrapper {
+    @apply relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.password-input-wrapper .form-input {
+    @apply pr-10 w-full;
+}
+
+.password-toggle-btn {
+    @apply absolute top-1/2 -translate-y-1/2 bg-transparent border-none cursor-pointer;
+    @apply flex items-center justify-center transition-opacity duration-150;
+    @apply text-gray-600 hover:text-black;
+    right: 0.75rem;
+    padding: 0.25rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.password-toggle-btn:focus-visible {
+    @apply outline-[3px] outline-blue-500 outline-offset-2 rounded-none;
+}
+
+.password-toggle-icon {
+    @apply w-5 h-5;
+    stroke: currentColor;
+}
+
+.eye-icon {
+    @apply flex items-center justify-center;
+}
+
+.eye-icon.hidden {
+    @apply hidden;
+}
+
 .form-error {
     @apply text-sm text-red-600 font-bold;
 }
@@ -55,59 +97,58 @@
 }
 
 .form-checkbox input[type="checkbox"] {
-    @apply w-4 h-4 cursor-pointer border-2 border-black rounded-none;
+    @apply w-4 h-4 cursor-pointer rounded-none;
+    border: 2px solid var(--color-border);
 }
 
 .btn {
-    @apply py-2 px-4 border-2 border-black rounded-none text-base font-bold cursor-pointer;
+    @apply py-2 px-4 rounded-none text-base font-bold cursor-pointer;
     @apply transition-all duration-150 inline-flex items-center justify-center;
+    border: 2px solid var(--color-border);
 }
 
 .btn:disabled {
-    @apply opacity-60 cursor-not-allowed;
-    transform: none;
+    @apply opacity-60 cursor-not-allowed transform-none;
 }
 
 .btn-primary {
     @apply bg-blue-300 text-black;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover:not(:disabled) {
     @apply bg-blue-400;
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-hover);
 }
 
 .btn-primary:active:not(:disabled) {
     transform: translate(4px, 4px);
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: none;
 }
 
 .btn-primary:focus-visible {
-    @apply outline-3 outline-blue-300 outline-offset-2;
-    outline-width: 3px;
+    @apply outline-[3px] outline-blue-300 outline-offset-2;
 }
 
 .btn-secondary {
     @apply bg-red-300 text-black;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover:not(:disabled) {
     @apply bg-red-400;
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-hover);
 }
 
 .btn-secondary:active:not(:disabled) {
     transform: translate(4px, 4px);
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: none;
 }
 
 .btn-secondary:focus-visible {
-    @apply outline-3 outline-red-300 outline-offset-2;
-    outline-width: 3px;
+    @apply outline-[3px] outline-red-300 outline-offset-2;
 }
 
 .btn-block {
@@ -116,7 +157,7 @@
 
 .auth-error {
     @apply bg-red-100 border-2 border-red-600 rounded-none p-4 mb-4;
-    box-shadow: 4px 4px 0px 0px rgba(204, 0, 0, 1);
+    box-shadow: var(--shadow-sm);
 }
 
 .auth-error ul {

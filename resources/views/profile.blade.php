@@ -3,33 +3,10 @@
 @section('title', 'Profile')
 
 @section('content')
-<div class="main-layout">
-    <x-layout.topbar />
-    
-    <div class="main-content-wrapper">
-        <div class="sidebar-container">
-            <x-layout.sidebar />
-        </div>
-        
-        <div class="main-content-area">
-            <div class="dashboard-container">
-            <div class="dashboard-content">
+<x-layout.page>
                 <div class="profile-header">
-                    <h1 class="dashboard-title">Profile</h1>
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    <div class="profile-header-actions" id="profileHeaderActions">
-                        @if(!isset($editMode) || !$editMode)
-                            <button type="button" class="btn btn-primary" onclick="enableEditMode()">Edit Profile</button>
-                            <a href="{{ route('profile.password.show') }}" class="btn btn-primary">Change Password</a>
-                        @endif
-                    </div>
+        <h1 class="dashboard-title">{{ isset($editMode) && $editMode ? 'Edit Profile' : 'Profile' }}</h1>
                 </div>
-
-                <x-ui.error-list :errors="$errors" />
 
                 <form method="POST" action="{{ route('profile.update') }}" class="profile-form" id="profileForm">
                     @csrf
@@ -59,33 +36,12 @@
                         <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
                     </div>
                 </form>
-            </div>
-        </div>
-        </div>
-    </div>
-</div>
-
-<script>
-function enableEditMode() {
-    const inputs = document.querySelectorAll('#profileForm input[readonly]');
-    inputs.forEach(input => {
-        input.removeAttribute('readonly');
-    });
-    
-    document.getElementById('profileActions').classList.add('visible');
-    const headerActions = document.getElementById('profileHeaderActions');
-    if (headerActions) {
-        headerActions.style.display = 'none';
-    }
-}
-
-function cancelEdit() {
-    window.location.reload();
-}
-
-// Make functions globally available
-window.enableEditMode = enableEditMode;
-window.cancelEdit = cancelEdit;
-
-</script>
+                
+                <div class="profile-bottom-actions" id="profileBottomActions">
+                    @if(!isset($editMode) || !$editMode)
+                        <button type="button" class="btn btn-primary" onclick="enableEditMode()">Edit Profile</button>
+                        <a href="{{ route('profile.password.show') }}" class="btn btn-primary">Change Password</a>
+                    @endif
+                </div>
+</x-layout.page>
 @endsection

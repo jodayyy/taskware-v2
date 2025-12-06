@@ -33,29 +33,29 @@
 }
 
 .btn-logout {
-    @apply flex items-center gap-2 p-2 bg-red-500 text-white border-2 border-black rounded-none text-sm font-bold cursor-pointer;
+    @apply flex items-center gap-2 p-2 bg-red-500 text-white rounded-none text-sm font-bold cursor-pointer;
     @apply transition-all duration-150;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-logout:hover {
     @apply bg-red-600;
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-hover);
 }
 
 .btn-logout:active {
     transform: translate(4px, 4px);
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: none;
 }
 
 .btn-logout:focus-visible {
-    @apply outline-3 outline-red-500 outline-offset-2;
-    outline-width: 3px;
+    @apply outline-[3px] outline-red-500 outline-offset-2;
 }
 
 .logout-icon {
-    @apply w-4 h-4;
+    @apply w-5 h-5;
 }
 
 /* ============================================
@@ -65,39 +65,68 @@
 .sidebar {
     @apply bg-white border-r-2 border-black z-[200];
     @apply transition-all duration-250 overflow-hidden;
-    @apply flex flex-col;
-    width: 54px; /* Collapsed width - using exact pixel for consistency */
-    height: 100%;
+    @apply flex flex-col w-[54px] h-full;
 }
 
 .sidebar.expanded {
-    width: 200px; /* Expanded width - using exact pixel for consistency */
+    @apply w-[200px];
+}
+
+/* Mobile sidebar behavior */
+@media (max-width: 768px) {
+    .sidebar-container {
+        @apply !w-0 overflow-hidden transition-[width] duration-[0.25s];
+    }
+    
+    .sidebar {
+        @apply w-0;
+    }
+    
+    .sidebar.mobile-open {
+        @apply w-[200px];
+    }
+    
+    .sidebar.mobile-open.expanded {
+        @apply w-[200px];
+    }
+    
+    .sidebar.mobile-open .sidebar-nav-text {
+        @apply opacity-100;
+    }
+    
+    .main-layout.sidebar-mobile-open .sidebar-container {
+        @apply !w-[200px];
+    }
+    
+    .sidebar-backdrop {
+        @apply hidden;
+    }
 }
 
 .sidebar-toggle {
-    @apply bg-white border-2 border-black cursor-pointer p-2 flex items-center justify-center text-black rounded-none;
+    @apply bg-white cursor-pointer p-2 flex items-center justify-center text-black rounded-none;
     @apply transition-all duration-150 shrink-0;
+    border: 2px solid var(--color-border);
     box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .sidebar-toggle:hover {
     @apply bg-gray-100;
     transform: translate(1px, 1px);
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-hover);
 }
 
 .sidebar-toggle:active {
     transform: translate(3px, 3px);
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: none;
 }
 
 .sidebar-toggle:focus-visible {
-    @apply outline-3 outline-blue-500 outline-offset-2;
-    outline-width: 3px;
+    @apply outline-[3px] outline-blue-500 outline-offset-2;
 }
 
 .sidebar-icon {
-    @apply w-4 h-4;
+    @apply w-5 h-5;
 }
 
 
@@ -111,32 +140,30 @@
 }
 
 .sidebar-nav-item:hover:not(.active) {
-    @apply bg-gray-100 border-black;
-    transform: translate(2px, 0px);
+    @apply bg-gray-100 border-black translate-x-[2px];
 }
 
 .sidebar-nav-item.active {
     @apply bg-blue-100 text-blue-900 font-bold border-black;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-sm);
 }
 
 .sidebar-nav-item.active:hover {
     @apply bg-blue-200;
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: var(--shadow-hover);
 }
 
 .sidebar-nav-item.active::before {
-    display: none;
+    @apply hidden;
 }
 
 .sidebar-nav-item:focus-visible {
-    @apply outline-3 outline-blue-500 outline-offset-2;
-    outline-width: 3px;
+    @apply outline-[3px] outline-blue-500 outline-offset-2;
 }
 
 .sidebar-nav-icon {
-    @apply w-4 h-4 shrink-0;
+    @apply w-5 h-5 shrink-0;
 }
 
 .sidebar-nav-text {
@@ -165,10 +192,117 @@
 }
 
 .sidebar-container {
-    @apply flex-shrink-0 transition-all duration-250;
-    width: 54px;
+    @apply flex-shrink-0 transition-all duration-250 w-[54px];
 }
 
 .main-layout.sidebar-expanded .sidebar-container {
-    width: 200px;
+    @apply w-[200px];
+}
+
+.sidebar-backdrop {
+    @apply hidden;
+}
+
+/* ============================================
+   Toast Notifications - RETRO STYLE
+   ============================================ */
+
+.toast-container {
+    @apply fixed bottom-4 right-4 z-[9999] flex flex-col gap-2;
+    max-width: 400px;
+}
+
+.toast {
+    @apply bg-white rounded-none opacity-0 transform translate-x-full transition-all duration-300;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.toast.toast-show {
+    @apply opacity-100 translate-x-0;
+}
+
+.toast.toast-hide {
+    @apply opacity-0 translate-x-full;
+}
+
+.toast-content {
+    @apply flex items-start justify-between p-4 gap-3;
+}
+
+.toast-body {
+    @apply flex-1 flex flex-col gap-1;
+}
+
+.toast-title {
+    @apply text-base font-bold m-0;
+}
+
+.toast-description {
+    @apply text-sm font-medium m-0;
+}
+
+.toast-close {
+    @apply bg-transparent border-none cursor-pointer text-lg font-bold;
+    @apply hover:opacity-70 transition-opacity duration-150;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.toast-success {
+    @apply border-green-600;
+    background-color: #d1fae5;
+}
+
+.toast-success .toast-title {
+    @apply text-green-800;
+}
+
+.toast-success .toast-description {
+    @apply text-green-700;
+}
+
+.toast-success .toast-close {
+    @apply text-green-800;
+}
+
+.toast-error {
+    @apply border-red-600;
+    background-color: #fee2e2;
+}
+
+.toast-error .toast-title {
+    @apply text-red-800;
+}
+
+.toast-error .toast-description {
+    @apply text-red-700;
+}
+
+.toast-error .toast-close {
+    @apply text-red-800;
+}
+
+.toast-info {
+    @apply border-black;
+    background-color: #ffffff;
+}
+
+.toast-info .toast-title {
+    @apply text-black;
+}
+
+.toast-info .toast-description {
+    @apply text-gray-700;
+}
+
+.toast-info .toast-close {
+    @apply text-black;
 }
