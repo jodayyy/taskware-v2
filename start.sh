@@ -3,6 +3,17 @@ set -e
 
 echo "Starting Taskware v2 application..."
 
+# Ensure APP_KEY has base64: prefix
+if [ -n "$APP_KEY" ]; then
+    if [ "${APP_KEY#base64:}" = "$APP_KEY" ]; then
+        echo "APP_KEY is missing 'base64:' prefix, adding it..."
+        export APP_KEY="base64:$APP_KEY"
+    fi
+else
+    echo "APP_KEY is not set, generating new key..."
+    php artisan key:generate --force --no-interaction
+fi
+
 # Run migrations
 php artisan migrate --force --no-interaction
 
