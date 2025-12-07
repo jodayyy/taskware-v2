@@ -44,6 +44,9 @@ RUN npm run build
 RUN ls -la public/build/ && test -f public/build/manifest.json || (echo "Build failed - manifest.json not found" && exit 1) && \
     test -d public/build/assets || (echo "Build failed - assets directory not found" && exit 1)
 
+# Generate resources manifest file (list of all files in resources directory)
+RUN find resources -type f | sort > .resources-manifest.txt
+
 # Clean up node_modules to save space (optional)
 RUN rm -rf node_modules
 

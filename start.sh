@@ -20,8 +20,65 @@ php artisan migrate --force --no-interaction
 # Clear all caches first to ensure fresh component registration
 php artisan optimize:clear
 
+# Verify all resources files against manifest
+echo "========================================="
+echo "Verifying resources files against manifest..."
+echo "========================================="
+
+MANIFEST_FILE=".resources-manifest.txt"
+MISSING_FILES=""
+TOTAL_FILES=0
+FOUND_FILES=0
+
+if [ ! -f "$MANIFEST_FILE" ]; then
+    echo "WARNING: Manifest file not found at $MANIFEST_FILE"
+    echo "Skipping resource file verification..."
+else
+    echo "Reading manifest from: $MANIFEST_FILE"
+    
+    # Read each line from manifest and verify file exists
+    while IFS= read -r file_path || [ -n "$file_path" ]; do
+        # Skip empty lines
+        [ -z "$file_path" ] && continue
+        
+        TOTAL_FILES=$((TOTAL_FILES + 1))
+        
+        if [ -f "$file_path" ]; then
+            echo "✓ Found: $file_path"
+            FOUND_FILES=$((FOUND_FILES + 1))
+        else
+            echo "ERROR: Missing file: $file_path"
+            MISSING_FILES="$MISSING_FILES $file_path"
+        fi
+    done < "$MANIFEST_FILE"
+    
+    # Summary
+    echo ""
+    echo "========================================="
+    echo "Verification Summary"
+    echo "========================================="
+    echo "Total files in manifest: $TOTAL_FILES"
+    echo "Files found: $FOUND_FILES"
+    echo "Files missing: $((TOTAL_FILES - FOUND_FILES))"
+    
+    if [ -n "$MISSING_FILES" ]; then
+        echo ""
+        echo "========================================="
+        echo "DEPLOYMENT FAILED: Missing resource files"
+        echo "========================================="
+        echo "Missing files:$MISSING_FILES"
+        echo ""
+        echo "These files were expected based on the build manifest but are missing in production."
+        echo "Please check your deployment process."
+        exit 1
+    fi
+    
+    echo ""
+    echo "✓ All resource files verified successfully!"
+fi
+
 # Verify component directories exist
-echo "Verifying component directories..."
+echo "Verifying component directory structure..."
 ls -la resources/views/components/ || echo "WARNING: components directory not found"
 
 # Cache configuration (this will re-register components via AppServiceProvider)
