@@ -32,7 +32,10 @@ COPY . .
 RUN rm -rf public/build public/hot
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+# Try install first, if lock file is out of sync, update it
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist || \
+    (composer update --no-dev --optimize-autoloader --no-interaction --prefer-dist && \
+     composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist)
 
 # Install npm dependencies (including dev dependencies needed for build)
 RUN npm ci
