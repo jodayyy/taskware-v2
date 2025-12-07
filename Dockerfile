@@ -40,9 +40,16 @@ RUN npm ci
 # Build frontend assets
 RUN npm run build
 
-# Verify build output exists
-RUN ls -la public/build/ && test -f public/build/manifest.json || (echo "Build failed - manifest.json not found" && exit 1) && \
-    test -d public/build/assets || (echo "Build failed - assets directory not found" && exit 1)
+# Verify build output exists and is complete
+RUN echo "Verifying build output..." && \
+    ls -la public/build/ && \
+    test -f public/build/manifest.json || (echo "ERROR: Build failed - manifest.json not found" && exit 1) && \
+    test -d public/build/assets || (echo "ERROR: Build failed - assets directory not found" && exit 1) && \
+    echo "Build verification successful:" && \
+    echo "- Manifest file exists" && \
+    echo "- Assets directory exists" && \
+    ls -la public/build/assets/ && \
+    echo "Build completed successfully!"
 
 # Generate resources manifest file (list of all files in resources directory)
 RUN find resources -type f | sort > .resources-manifest.txt

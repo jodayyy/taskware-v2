@@ -20,6 +20,27 @@ php artisan migrate --force --no-interaction
 # Clear all caches first to ensure fresh component registration
 php artisan optimize:clear
 
+# Verify Vite build assets exist
+echo "========================================="
+echo "Verifying Vite build assets..."
+echo "========================================="
+if [ ! -f "public/build/manifest.json" ]; then
+    echo "ERROR: Vite manifest.json not found in public/build/"
+    echo "The build process may have failed. Please check the build logs."
+    exit 1
+fi
+
+if [ ! -d "public/build/assets" ]; then
+    echo "ERROR: Vite assets directory not found in public/build/assets/"
+    echo "The build process may have failed. Please check the build logs."
+    exit 1
+fi
+
+echo "✓ Vite manifest.json found"
+echo "✓ Vite assets directory found"
+echo "Build assets verified successfully!"
+echo ""
+
 # Verify all resources files against manifest
 echo "========================================="
 echo "Verifying resources files against manifest..."

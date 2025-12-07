@@ -14,6 +14,8 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
+      # APP_URL will be automatically set by Render to your service URL
+      # Make sure it's configured in Render dashboard if not auto-detected
       - key: APP_URL
         sync: false
       - key: APP_KEY
