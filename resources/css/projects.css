@@ -195,3 +195,114 @@
     box-shadow: var(--shadow-sm);
     background-color: white;
 } */
+
+/* File Input Styles */
+.file-input-wrapper {
+    @apply relative;
+}
+
+.file-input-hidden {
+    @apply absolute opacity-0 w-0 h-0;
+    position: absolute;
+    left: -9999px;
+}
+
+.btn-choose-file {
+    @apply text-sm px-3 py-1.5 bg-blue-300 text-black font-medium cursor-pointer;
+    @apply transition-all duration-150 rounded-none;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-choose-file:hover {
+    @apply bg-blue-400;
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-choose-file:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+.btn-choose-file:focus-visible {
+    @apply outline-[3px] outline-blue-300 outline-offset-2;
+}
+
+/* Attachments Styles */
+.attachments-preview {
+    @apply flex flex-col gap-2;
+}
+
+.attachment-item {
+    @apply flex items-center justify-between;
+}
+
+.attachment-item-content {
+    @apply flex items-center gap-2;
+}
+
+.attachment-name {
+    @apply text-base text-blue-600 font-medium;
+}
+
+.attachment-name:hover {
+    @apply text-blue-700 underline;
+}
+
+.attachment-item-content .attachment-name {
+    @apply no-underline;
+}
+
+.attachment-item-content .attachment-name:hover {
+    @apply underline;
+}
+
+.attachment-size {
+    @apply text-sm text-blue-600;
+}
+
+.attachment-remove {
+    @apply flex items-center justify-center p-1 text-red-600 bg-transparent border-none cursor-pointer;
+    @apply transition-all duration-150;
+    min-width: auto;
+    width: auto;
+}
+
+.attachment-remove:hover {
+    @apply text-red-700;
+    transform: scale(1.1);
+}
+
+.attachment-remove:focus-visible {
+    @apply outline-[3px] outline-blue-500 outline-offset-2;
+}
+
+.attachments-list {
+    @apply flex flex-col gap-2;
+}
+
+.existing-attachments {
+    @apply flex flex-col gap-2;
+}
+
+.existing-attachments-label {
+    @apply text-sm font-bold text-black;
+}
+
+.attachment-item-existing {
+    @apply flex items-center gap-2;
+}
+
+.attachment-link-text {
+    @apply text-base text-blue-600 font-medium no-underline;
+    @apply transition-all duration-150;
+}
+
+.attachment-link-text:hover {
+    @apply text-blue-700 underline;
+}
+
+.attachment-size-text {
+    @apply text-sm text-blue-600;
+}

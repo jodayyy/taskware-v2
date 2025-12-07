@@ -37,4 +37,7 @@ Route::middleware('auth')->group(function () {
     
     // Task Routes
     Route::resource('tasks', TaskController::class);
+    
+    // Attachment download route
+    Route::get('/attachments/{attachment}', [ProjectController::class, 'downloadAttachment'])->name('attachments.download');
 });

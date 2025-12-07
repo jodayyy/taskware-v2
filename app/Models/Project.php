@@ -45,6 +45,14 @@ class Project extends Model
     }
 
     /**
+     * Get the attachments for the project.
+     */
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(ProjectAttachment::class);
+    }
+
+    /**
      * Update the project status based on its tasks.
      */
     public function updateStatusFromTasks(): void

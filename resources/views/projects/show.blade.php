@@ -60,6 +60,22 @@
                                     <p class="project-detail-value">{{ $project->completed_at ? $project->completed_at->format('F j, Y g:i A') : '' }}</p>
                                 </div>
                             </div>
+
+                            @if($project->attachments->isNotEmpty())
+                                <div class="project-detail-item">
+                                    <label class="project-detail-label">Attachments:</label>
+                                    <div class="attachments-list">
+                                        @foreach($project->attachments as $attachment)
+                                            <div class="attachment-item-existing">
+                                                <a href="{{ route('attachments.download', $attachment) }}" target="_blank" class="attachment-link-text" @if(!$attachment->mime_type || !str_starts_with($attachment->mime_type, 'image/')) download @endif>
+                                                    {{ $attachment->original_name }}
+                                                </a>
+                                                <span class="attachment-size-text">({{ $attachment->formatted_size }})</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
