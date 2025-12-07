@@ -306,3 +306,39 @@
 .toast-info .toast-close {
     @apply text-black;
 }
+
+/* ============================================
+   Delete Confirmation Dialog - RETRO STYLE
+   ============================================ */
+
+.delete-dialog-overlay {
+    @apply fixed inset-0 z-[10000] flex items-center justify-center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.delete-dialog {
+    @apply bg-white rounded-none p-6;
+    @apply w-full max-w-md mx-4;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+}
+
+.delete-dialog-header {
+    @apply mb-4;
+}
+
+.delete-dialog-title {
+    @apply text-2xl font-bold text-black m-0;
+}
+
+.delete-dialog-body {
+    @apply mb-6;
+}
+
+.delete-dialog-message {
+    @apply text-base text-gray-700 m-0;
+}
+
+.delete-dialog-actions {
+    @apply flex justify-end gap-3;
+}

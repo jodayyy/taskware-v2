@@ -4,6 +4,10 @@
             <x-icons.dashboard />
             <span class="sidebar-nav-text">Dashboard</span>
         </a>
+        <a href="{{ route('projects.index') }}" class="sidebar-nav-item {{ request()->routeIs('projects.*') ? 'active' : '' }}">
+            <x-icons.project />
+            <span class="sidebar-nav-text">Projects</span>
+        </a>
         <a href="{{ route('profile.show') }}" class="sidebar-nav-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
             <x-icons.profile />
             <span class="sidebar-nav-text">Profile</span>

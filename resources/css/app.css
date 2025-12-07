@@ -5,6 +5,7 @@
 @import './auth.css';
 @import './main-content.css';
 @import './profile.css';
+@import './projects.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

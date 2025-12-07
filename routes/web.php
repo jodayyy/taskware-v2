@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,4 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/change-password', [ProfileController::class, 'showChangePassword'])->name('profile.password.show');
     Route::put('/profile/change-password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    
+    // Project Routes
+    Route::resource('projects', ProjectController::class);
 });

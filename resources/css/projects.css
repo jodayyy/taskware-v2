@@ -1,0 +1,178 @@
+/* Projects Component Styles - RETRO DESIGN */
+
+.projects-header {
+    @apply flex justify-between items-center mb-8 gap-4;
+}
+
+.projects-header .btn {
+    @apply flex items-center gap-2;
+}
+
+.projects-empty {
+    @apply text-center py-12;
+}
+
+.projects-empty p {
+    @apply text-lg text-gray-600 font-medium;
+}
+
+.projects-list {
+    @apply flex flex-col gap-4;
+}
+
+.project-card {
+    @apply block bg-white rounded-none no-underline text-black;
+    @apply transition-all duration-150;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.project-card:hover {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.project-card-content {
+    @apply p-6;
+}
+
+.project-card-header {
+    @apply flex justify-between items-start gap-4;
+}
+
+.project-card-left {
+    @apply flex-1;
+}
+
+.project-title {
+    @apply text-xl font-bold text-black mb-2 m-0;
+}
+
+.project-description {
+    @apply text-base text-gray-700 mb-0 m-0;
+}
+
+.project-status {
+    @apply flex-shrink-0;
+}
+
+.status-badge {
+    @apply inline-block px-3 py-1 rounded-none text-sm font-bold;
+    border: 2px solid var(--color-border);
+}
+
+.status-upcoming {
+    @apply bg-yellow-100 text-yellow-800 border-yellow-600;
+}
+
+.status-in-progress {
+    @apply bg-blue-100 text-blue-800 border-blue-600;
+}
+
+.status-completed {
+    @apply bg-green-100 text-green-800 border-green-600;
+}
+
+.project-form-header {
+    @apply mb-8;
+}
+
+.project-form {
+    @apply w-full;
+}
+
+.project-form-actions {
+    @apply flex gap-4 mt-8;
+}
+
+.project-details-header {
+    @apply flex items-center mb-8 gap-4;
+    position: relative;
+}
+
+.project-details-header > .back-button {
+    @apply flex-shrink-0;
+}
+
+.project-details-header > .project-details-actions {
+    @apply flex-shrink-0 ml-auto;
+}
+
+.project-details-actions {
+    @apply flex items-center gap-2;
+}
+
+.back-button {
+    @apply flex items-center justify-center p-2 text-black no-underline;
+    @apply transition-all duration-150 rounded-none;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.back-button:hover {
+    @apply bg-gray-100;
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.back-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+.back-button:focus-visible {
+    @apply outline-[3px] outline-blue-500 outline-offset-2;
+}
+
+.btn-icon-only {
+    @apply p-2;
+    width: auto;
+    min-width: auto;
+}
+
+.btn-icon-only svg {
+    @apply w-5 h-5;
+}
+
+.inline-form {
+    @apply m-0;
+}
+
+.project-details {
+    @apply flex flex-col gap-6;
+}
+
+.project-detail-item {
+    @apply flex flex-col gap-2;
+}
+
+.project-detail-item-inline {
+    @apply flex-row items-center gap-3;
+}
+
+.project-detail-item-row {
+    @apply flex-row items-start gap-6;
+    flex-wrap: wrap;
+}
+
+.project-detail-date-item {
+    @apply flex flex-col gap-2;
+    flex: 1;
+    min-width: 200px;
+}
+
+.project-detail-label {
+    @apply text-sm font-bold text-black;
+}
+
+.project-detail-value {
+    @apply text-base text-gray-700 m-0;
+}
+
+/* .project-details-title {
+    @apply text-2xl font-bold text-black mx-30 px-4 py-2;
+    @apply flex-1 text-center;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    background-color: white;
+} */

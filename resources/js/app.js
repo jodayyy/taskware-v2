@@ -5,6 +5,7 @@ import './password-form';
 import './password-toggle';
 import './profile-edit';
 import './toast';
+import './delete-dialog';
 
 // Make password validation functions globally available
 window.passwordValidation = passwordValidation;
