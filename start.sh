@@ -28,12 +28,23 @@ echo "========================================="
 # Copy manifest.json from .vite subdirectory if it exists there but not in root
 if [ -f "public/build/.vite/manifest.json" ] && [ ! -f "public/build/manifest.json" ]; then
     cp public/build/.vite/manifest.json public/build/manifest.json
-    echo "Copied manifest.json from .vite subdirectory to build root"
+    echo "✓ Copied manifest.json from .vite subdirectory to build root"
 fi
 
-if [ ! -f "public/build/manifest.json" ] && [ ! -f "public/build/.vite/manifest.json" ]; then
+# Verify manifest exists and show its contents for debugging
+if [ -f "public/build/manifest.json" ]; then
+    echo "✓ Vite manifest.json found"
+    echo "Manifest preview (first 10 lines):"
+    head -10 public/build/manifest.json || true
+elif [ -f "public/build/.vite/manifest.json" ]; then
+    echo "WARNING: Manifest only found in .vite subdirectory, copying now..."
+    cp public/build/.vite/manifest.json public/build/manifest.json
+    echo "✓ Copied manifest.json"
+else
     echo "ERROR: Vite manifest.json not found in public/build/ or public/build/.vite/"
     echo "The build process may have failed. Please check the build logs."
+    echo "Contents of public/build/:"
+    ls -la public/build/ || true
     exit 1
 fi
 

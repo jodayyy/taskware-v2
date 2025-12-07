@@ -44,7 +44,13 @@ RUN npm run build
 # Vite 7 places manifest in .vite subdirectory, but Laravel expects it in build root
 RUN if [ -f "public/build/.vite/manifest.json" ]; then \
         cp public/build/.vite/manifest.json public/build/manifest.json && \
-        echo "✓ Copied manifest.json from .vite subdirectory to build root"; \
+        echo "✓ Copied manifest.json from .vite subdirectory to build root" && \
+        echo "Manifest file size: $(wc -c < public/build/manifest.json) bytes" && \
+        head -20 public/build/manifest.json || true; \
+    elif [ -f "public/build/manifest.json" ]; then \
+        echo "✓ Manifest.json already exists in build root"; \
+    else \
+        echo "WARNING: No manifest.json found in either location"; \
     fi
 
 # Verify build output exists and is complete
@@ -76,6 +82,7 @@ RUN mkdir -p storage/framework/{sessions,views,cache} \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 755 public/build \
     && chown -R www-data:www-data public/build \
+    && chmod -R 644 public/build/manifest.json 2>/dev/null || true \
     && chmod -R 755 resources/views \
     && chown -R www-data:www-data resources/views
 
