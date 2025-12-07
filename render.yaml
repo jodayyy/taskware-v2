@@ -62,7 +62,21 @@ services:
       - key: BROADCAST_CONNECTION
         value: log
       - key: MAIL_MAILER
-        value: log
+        value: smtp
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: 587
+      - key: MAIL_USERNAME
+        value: mohamadjohariofficial@gmail.com
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_ENCRYPTION
+        value: tls
+      - key: MAIL_FROM_ADDRESS
+        value: mohamadjohariofficial@gmail.com
+      - key: MAIL_FROM_NAME
+        value: Taskware
     healthCheckPath: /
     autoDeploy: true
 
