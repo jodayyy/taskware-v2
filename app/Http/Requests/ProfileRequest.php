@@ -41,6 +41,10 @@ class ProfileRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email')->ignore($user->id),
             ],
+            'notify_on_project_created' => [
+                'sometimes',
+                'boolean',
+            ],
         ];
     }
 

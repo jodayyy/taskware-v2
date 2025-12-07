@@ -30,7 +30,10 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request): RedirectResponse
     {
-        auth()->user()->update($request->only(['username', 'email']));
+        $data = $request->only(['username', 'email']);
+        $data['notify_on_project_created'] = $request->has('notify_on_project_created');
+        
+        auth()->user()->update($data);
 
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
     }

@@ -6,9 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Mail\ProjectCreatedNotification;
 use App\Models\Project;
 use App\Models\ProjectAttachment;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -57,7 +61,58 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect()->route('projects.index')->with('success', 'Project created successfully!');
+        // Send email notifications to users who have notifications enabled
+        $usersToNotify = User::where('notify_on_project_created', true)->get();
+        $emailsSent = 0;
+        $emailsFailed = 0;
+        $emailErrors = [];
+
+        if ($usersToNotify->isEmpty()) {
+            return redirect()->route('projects.index')
+                ->with('success', 'Project created successfully!')
+                ->with('info', 'No users have email notifications enabled.');
+        }
+
+        foreach ($usersToNotify as $user) {
+            try {
+                Mail::to($user->email)->send(new ProjectCreatedNotification($project));
+                $emailsSent++;
+            } catch (\Exception $e) {
+                $emailsFailed++;
+                $emailErrors[] = $user->email . ': ' . $e->getMessage();
+                Log::error('Failed to send project creation notification email', [
+                    'user_id' => $user->id,
+                    'user_email' => $user->email,
+                    'project_id' => $project->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        // Prepare success message
+        $successMessage = 'Project created successfully!';
+        if ($emailsSent > 0) {
+            $successMessage .= " Email notifications sent to {$emailsSent} user(s).";
+        }
+
+        // Prepare error message if any emails failed
+        $errorMessage = null;
+        if ($emailsFailed > 0) {
+            $errorMessage = "Failed to send email notifications to {$emailsFailed} user(s).";
+            if (count($emailErrors) <= 3) {
+                $errorMessage .= ' ' . implode('; ', $emailErrors);
+            }
+        }
+
+        $redirect = redirect()->route('projects.index')->with('success', $successMessage);
+        
+        if ($errorMessage) {
+            $redirect->with('error', $errorMessage);
+        } elseif ($emailsSent === 0 && $emailsFailed === 0) {
+            $redirect->with('info', 'No email notifications were sent.');
+        }
+
+        return $redirect;
     }
 
     /**

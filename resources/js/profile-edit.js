@@ -8,6 +8,19 @@ export function enableEditMode() {
         input.removeAttribute('readonly');
     });
     
+    // Enable checkbox
+    const checkbox = document.querySelector('#profileForm input[type="checkbox"][name="notify_on_project_created"]');
+    if (checkbox) {
+        checkbox.removeAttribute('disabled');
+    }
+    
+    // Remove disabled styling from checkbox label
+    const checkboxLabel = checkbox?.closest('.form-checkbox');
+    if (checkboxLabel) {
+        checkboxLabel.style.pointerEvents = '';
+        checkboxLabel.style.opacity = '';
+    }
+    
     document.getElementById('profileActions').classList.add('visible');
     const bottomActions = document.getElementById('profileBottomActions');
     if (bottomActions) {

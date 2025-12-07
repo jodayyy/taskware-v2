@@ -31,6 +31,20 @@
                         class="mt-2"
                     />
 
+                    <div class="form-group mt-2">
+                        <label class="form-checkbox" id="notifyCheckboxLabel" style="{{ !isset($editMode) || !$editMode ? 'pointer-events: none; opacity: 0.6;' : '' }}">
+                            <input 
+                                type="checkbox" 
+                                name="notify_on_project_created" 
+                                value="1"
+                                id="notifyCheckbox"
+                                {{ old('notify_on_project_created', $user->notify_on_project_created) ? 'checked' : '' }}
+                                {{ !isset($editMode) || !$editMode ? 'disabled' : '' }}
+                            >
+                            <span>Notify me via email when a new project is created</span>
+                        </label>
+                    </div>
+
                     <div class="profile-actions {{ isset($editMode) && $editMode ? 'visible' : '' }}" id="profileActions">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                         <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
