@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,4 +34,7 @@ Route::middleware('auth')->group(function () {
     
     // Project Routes
     Route::resource('projects', ProjectController::class);
+    
+    // Task Routes
+    Route::resource('tasks', TaskController::class);
 });

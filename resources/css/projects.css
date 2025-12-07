@@ -40,6 +40,16 @@
     @apply flex justify-between items-start gap-4;
 }
 
+@media (max-width: 768px) {
+    .project-card-header {
+        @apply flex-col gap-3;
+    }
+    
+    .project-status {
+        @apply w-full;
+    }
+}
+
 .project-card-left {
     @apply flex-1;
 }
@@ -138,6 +148,10 @@
     @apply m-0;
 }
 
+.project-main-content-grid {
+    @apply flex flex-col gap-2;
+}
+
 .project-details {
     @apply flex flex-col gap-6;
 }
@@ -167,6 +181,11 @@
 
 .project-detail-value {
     @apply text-base text-gray-700 m-0;
+}
+
+
+.project-tasks-section .tasks-header {
+    @apply mb-6;
 }
 
 /* .project-details-title {

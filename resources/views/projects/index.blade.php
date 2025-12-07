@@ -6,7 +6,7 @@
 <x-layout.page>
     <div class="projects-header">
         <h1 class="main-content-title">All Projects</h1>
-        <a href="{{ route('projects.create') }}" class="btn btn-primary">
+        <a href="{{ route('projects.create') }}" class="btn btn-primary btn-icon-only">
             <x-icons.add />
         </a>
     </div>

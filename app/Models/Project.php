@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
@@ -33,5 +34,40 @@ class Project extends Model
         return [
             'completed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the tasks for the project.
+     */
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Update the project status based on its tasks.
+     */
+    public function updateStatusFromTasks(): void
+    {
+        $tasksCount = $this->tasks()->count();
+
+        if ($tasksCount === 0) {
+            $this->status = 'upcoming';
+            $this->completed_at = null;
+        } else {
+            $completedTasksCount = $this->tasks()->where('status', 'completed')->count();
+
+            if ($completedTasksCount === $tasksCount) {
+                $this->status = 'completed';
+                if (!$this->completed_at) {
+                    $this->completed_at = now();
+                }
+            } else {
+                $this->status = 'in-progress';
+                $this->completed_at = null;
+            }
+        }
+
+        $this->save();
     }
 }

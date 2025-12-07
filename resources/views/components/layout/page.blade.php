@@ -9,7 +9,7 @@
         </div>
         
         <div class="main-content-area">
-            <div class="main-content-container">
+            <div class="main-content-container pb-6">
                 <div class="main-content">
                     {{ $slot }}
                 </div>
