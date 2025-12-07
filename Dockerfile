@@ -40,11 +40,22 @@ RUN npm ci
 # Build frontend assets
 RUN npm run build
 
+# Copy manifest.json from .vite subdirectory to root of build directory (Laravel expects it there)
+# Vite 7 places manifest in .vite subdirectory, but Laravel expects it in build root
+RUN if [ -f "public/build/.vite/manifest.json" ]; then \
+        cp public/build/.vite/manifest.json public/build/manifest.json && \
+        echo "✓ Copied manifest.json from .vite subdirectory to build root"; \
+    fi
+
 # Verify build output exists and is complete
 RUN echo "Verifying build output..." && \
     ls -la public/build/ && \
-    test -f public/build/manifest.json || (echo "ERROR: Build failed - manifest.json not found" && exit 1) && \
-    test -d public/build/assets || (echo "ERROR: Build failed - assets directory not found" && exit 1) && \
+    if [ ! -f "public/build/manifest.json" ] && [ ! -f "public/build/.vite/manifest.json" ]; then \
+        echo "ERROR: Build failed - manifest.json not found in either location" && exit 1; \
+    fi && \
+    if [ ! -d "public/build/assets" ]; then \
+        echo "ERROR: Build failed - assets directory not found" && exit 1; \
+    fi && \
     echo "Build verification successful:" && \
     echo "- Manifest file exists" && \
     echo "- Assets directory exists" && \

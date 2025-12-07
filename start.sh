@@ -24,8 +24,15 @@ php artisan optimize:clear
 echo "========================================="
 echo "Verifying Vite build assets..."
 echo "========================================="
-if [ ! -f "public/build/manifest.json" ]; then
-    echo "ERROR: Vite manifest.json not found in public/build/"
+
+# Copy manifest.json from .vite subdirectory if it exists there but not in root
+if [ -f "public/build/.vite/manifest.json" ] && [ ! -f "public/build/manifest.json" ]; then
+    cp public/build/.vite/manifest.json public/build/manifest.json
+    echo "Copied manifest.json from .vite subdirectory to build root"
+fi
+
+if [ ! -f "public/build/manifest.json" ] && [ ! -f "public/build/.vite/manifest.json" ]; then
+    echo "ERROR: Vite manifest.json not found in public/build/ or public/build/.vite/"
     echo "The build process may have failed. Please check the build logs."
     exit 1
 fi
