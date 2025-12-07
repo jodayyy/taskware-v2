@@ -47,7 +47,7 @@ services:
           name: taskware-db
           property: password
       - key: CACHE_STORE
-        value: database
+        value: file
       - key: SESSION_DRIVER
         value: database
       - key: SESSION_LIFETIME
