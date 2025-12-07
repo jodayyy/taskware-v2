@@ -14,8 +14,9 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
-      # APP_URL will be automatically set by Render to your service URL
-      # Make sure it's configured in Render dashboard if not auto-detected
+      # APP_URL must be set to HTTPS in Render dashboard
+      # Set it to: https://taskware.onrender.com
+      # This ensures Laravel generates HTTPS URLs for assets
       - key: APP_URL
         sync: false
       - key: APP_KEY

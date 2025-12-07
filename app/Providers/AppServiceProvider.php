@@ -22,5 +22,10 @@ class AppServiceProvider extends ServiceProvider
     {
         // Ensure Vite uses the correct build directory
         Vite::useBuildDirectory('build');
+        
+        // Force HTTPS URLs in production (Render serves over HTTPS)
+        if (app()->environment('production')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }
