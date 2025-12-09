@@ -4,11 +4,12 @@
 
 @section('content')
 <x-layout.page>
-    <div class="task-form-header">
-        <h1 class="main-content-title">Create Task</h1>
-    </div>
+    <x-layout.container>
+        <div class="task-form-header">
+            <h1 class="main-content-title">Create Task</h1>
+        </div>
 
-    <form method="POST" action="{{ route('tasks.store') }}" class="task-form">
+        <form method="POST" action="{{ route('tasks.store') }}" class="task-form">
         @csrf
 
         <x-ui.form-input 
@@ -60,5 +61,6 @@
             <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
+    </x-layout.container>
 </x-layout.page>
 @endsection

@@ -4,11 +4,12 @@
 
 @section('content')
 <x-layout.page>
-    <div class="task-form-header">
-        <h1 class="main-content-title">Edit Task</h1>
-    </div>
+    <x-layout.container>
+        <div class="task-form-header">
+            <h1 class="main-content-title">Edit Task</h1>
+        </div>
 
-    <form method="POST" action="{{ route('tasks.update', $task) }}" class="task-form">
+        <form method="POST" action="{{ route('tasks.update', $task) }}" class="task-form">
         @csrf
         @method('PUT')
 
@@ -73,5 +74,6 @@
             <a href="{{ route('tasks.show', $task) }}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
+    </x-layout.container>
 </x-layout.page>
 @endsection

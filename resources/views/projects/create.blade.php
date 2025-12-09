@@ -4,11 +4,12 @@
 
 @section('content')
 <x-layout.page>
-    <div class="project-form-header">
-        <h1 class="main-content-title">Create Project</h1>
-    </div>
+    <x-layout.container>
+        <div class="project-form-header">
+            <h1 class="main-content-title">Create Project</h1>
+        </div>
 
-    <form method="POST" action="{{ route('projects.store') }}" class="project-form" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('projects.store') }}" class="project-form" enctype="multipart/form-data">
         @csrf
 
         <x-ui.form-input 
@@ -60,6 +61,7 @@
             <a href="{{ route('projects.index') }}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
+    </x-layout.container>
 </x-layout.page>
 
 <script>
