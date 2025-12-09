@@ -184,7 +184,7 @@
 }
 
 .main-content-area {
-    @apply flex-1 flex flex-col;
+    @apply flex-1 flex flex-col gap-6 p-6;
     background-color: var(--color-background-alt);
     background-image: radial-gradient(circle, var(--color-text-lighter) 1px, transparent 1px);
     background-size: 24px 24px;
