@@ -25,12 +25,12 @@
         foreach ($options as $key => $item) {
             if (is_array($item)) {
                 $val = $item[$optionValue] ?? $key;
-                $label = $item[$optionLabel] ?? $item['name'] ?? $item['title'] ?? $val;
-                $optionsArray[$val] = $label;
+                $optionLabelText = $item[$optionLabel] ?? $item['name'] ?? $item['title'] ?? $val;
+                $optionsArray[$val] = $optionLabelText;
             } elseif (is_object($item)) {
                 $val = $item->{$optionValue} ?? $key;
-                $label = $item->{$optionLabel} ?? ($item->name ?? ($item->title ?? $val));
-                $optionsArray[$val] = $label;
+                $optionLabelText = $item->{$optionLabel} ?? ($item->name ?? ($item->title ?? $val));
+                $optionsArray[$val] = $optionLabelText;
             } else {
                 $optionsArray[$key] = $item;
             }

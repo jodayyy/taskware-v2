@@ -22,7 +22,7 @@
 
         <x-ui.form-select 
             name="project_id" 
-            label="Project (Optional)"
+            label="Project"
             :options="$projects"
             :value="old('project_id', $selectedProjectId ?? null)"
             placeholder="No Project"

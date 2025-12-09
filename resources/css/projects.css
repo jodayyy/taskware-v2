@@ -149,7 +149,7 @@
 }
 
 .project-main-content-grid {
-    @apply flex flex-col gap-2;
+    @apply flex flex-col gap-6;
 }
 
 .project-details {
