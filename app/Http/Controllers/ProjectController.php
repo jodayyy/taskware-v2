@@ -23,7 +23,9 @@ class ProjectController extends Controller
      */
     public function index(): View
     {
-        $projects = Project::latest()->get();
+        $projects = Project::where('user_id', auth()->id())
+            ->latest()
+            ->get();
 
         return view('projects.index', compact('projects'));
     }
@@ -44,6 +46,7 @@ class ProjectController extends Controller
         $project = Project::create([
             ...$request->validated(),
             'status' => 'upcoming',
+            'user_id' => auth()->id(),
         ]);
 
         // Handle file uploads
@@ -61,8 +64,10 @@ class ProjectController extends Controller
             }
         }
 
-        // Send email notifications to users who have notifications enabled
-        $usersToNotify = User::where('notify_on_project_created', true)->get();
+        // Send email notifications to users who have notifications enabled (excluding the creator)
+        $usersToNotify = User::where('notify_on_project_created', true)
+            ->where('id', '!=', auth()->id())
+            ->get();
         $emailsSent = 0;
         $emailsFailed = 0;
         $emailErrors = [];
@@ -120,6 +125,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project): View
     {
+        if ($project->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this project.');
+        }
+
         $project->load('tasks', 'attachments');
 
         return view('projects.show', compact('project'));
@@ -130,6 +139,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project): View
     {
+        if ($project->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this project.');
+        }
+
         $project->load('attachments');
         
         $existingAttachments = $project->attachments->map(function ($attachment) {
@@ -150,6 +163,10 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project): RedirectResponse
     {
+        if ($project->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this project.');
+        }
+
         $project->update($request->validated());
 
         // Handle attachment deletions
@@ -191,6 +208,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project): RedirectResponse
     {
+        if ($project->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this project.');
+        }
+
         $project->delete();
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully!');
@@ -201,6 +222,11 @@ class ProjectController extends Controller
      */
     public function downloadAttachment(ProjectAttachment $attachment)
     {
+        // Verify the attachment belongs to a project owned by the user
+        if ($attachment->project->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this attachment.');
+        }
+
         // Verify the file exists
         if (!Storage::disk('public')->exists($attachment->file_path)) {
             abort(404, 'File not found');

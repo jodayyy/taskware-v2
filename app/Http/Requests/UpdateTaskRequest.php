@@ -13,7 +13,7 @@ class UpdateTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->route('task')->user_id === auth()->id();
     }
 
     /**
@@ -25,7 +25,17 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'project_id' => ['nullable', 'exists:projects,id'],
+            'project_id' => [
+                'nullable',
+                'exists:projects,id',
+                function ($attribute, $value, $fail) {
+                    if ($value && !\App\Models\Project::where('id', $value)
+                        ->where('user_id', auth()->id())
+                        ->exists()) {
+                        $fail('The selected project does not belong to you.');
+                    }
+                },
+            ],
             'description' => ['nullable', 'string'],
             'status' => ['required', 'in:to-do,in-progress,completed'],
             'priority' => ['required', 'in:low,normal,urgent'],

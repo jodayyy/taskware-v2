@@ -25,7 +25,17 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'project_id' => ['nullable', 'exists:projects,id'],
+            'project_id' => [
+                'nullable',
+                'exists:projects,id',
+                function ($attribute, $value, $fail) {
+                    if ($value && !\App\Models\Project::where('id', $value)
+                        ->where('user_id', auth()->id())
+                        ->exists()) {
+                        $fail('The selected project does not belong to you.');
+                    }
+                },
+            ],
             'description' => ['nullable', 'string'],
             'priority' => ['required', 'in:low,normal,urgent'],
             'due' => ['nullable', 'date'],

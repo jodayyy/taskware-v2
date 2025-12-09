@@ -18,7 +18,10 @@ class TaskController extends Controller
      */
     public function index(): View
     {
-        $tasks = Task::with('project')->latest()->get();
+        $tasks = Task::where('user_id', auth()->id())
+            ->with('project')
+            ->latest()
+            ->get();
 
         return view('tasks.index', compact('tasks'));
     }
@@ -28,7 +31,9 @@ class TaskController extends Controller
      */
     public function create(): View
     {
-        $projects = Project::orderBy('title')->get();
+        $projects = Project::where('user_id', auth()->id())
+            ->orderBy('title')
+            ->get();
         $selectedProjectId = request()->query('project_id');
 
         return view('tasks.create', compact('projects', 'selectedProjectId'));
@@ -39,7 +44,10 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request): RedirectResponse
     {
-        Task::create($request->validated());
+        Task::create([
+            ...$request->validated(),
+            'user_id' => auth()->id(),
+        ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
     }
@@ -49,6 +57,10 @@ class TaskController extends Controller
      */
     public function show(Task $task): View
     {
+        if ($task->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this task.');
+        }
+
         $task->load('project');
 
         return view('tasks.show', compact('task'));
@@ -59,7 +71,13 @@ class TaskController extends Controller
      */
     public function edit(Task $task): View
     {
-        $projects = Project::orderBy('title')->get();
+        if ($task->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this task.');
+        }
+
+        $projects = Project::where('user_id', auth()->id())
+            ->orderBy('title')
+            ->get();
         $task->load('project');
 
         return view('tasks.edit', compact('task', 'projects'));
@@ -70,6 +88,10 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task): RedirectResponse
     {
+        if ($task->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this task.');
+        }
+
         $validated = $request->validated();
         
         // Set completed_at if status is being changed to completed
@@ -89,6 +111,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task): RedirectResponse
     {
+        if ($task->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this task.');
+        }
+
         $task->delete();
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');

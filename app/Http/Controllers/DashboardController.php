@@ -15,13 +15,26 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
-        $recentProjects = Project::latest()->take(5)->get();
-        $recentTasks = Task::with('project')->latest()->take(5)->get();
+        $userId = auth()->id();
+        
+        $recentProjects = Project::where('user_id', $userId)
+            ->latest()
+            ->take(5)
+            ->get();
+        $recentTasks = Task::where('user_id', $userId)
+            ->with('project')
+            ->latest()
+            ->take(5)
+            ->get();
 
-        $totalProjects = Project::count();
-        $totalTasks = Task::count();
-        $activeTasks = Task::where('status', '!=', 'completed')->count();
-        $completedTasks = Task::where('status', 'completed')->count();
+        $totalProjects = Project::where('user_id', $userId)->count();
+        $totalTasks = Task::where('user_id', $userId)->count();
+        $activeTasks = Task::where('user_id', $userId)
+            ->where('status', '!=', 'completed')
+            ->count();
+        $completedTasks = Task::where('user_id', $userId)
+            ->where('status', 'completed')
+            ->count();
 
         return view('dashboard', compact(
             'recentProjects',

@@ -25,6 +25,7 @@ class Task extends Model
         'priority',
         'due',
         'completed_at',
+        'user_id',
     ];
 
     /**
@@ -38,6 +39,14 @@ class Task extends Model
             'due' => 'datetime',
             'completed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the user that owns the task.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**
