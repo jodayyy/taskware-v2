@@ -27,6 +27,12 @@ export function enableEditMode() {
         bottomActions.style.display = 'none';
     }
     
+    // Show delete account button
+    const deleteAccountDiv = document.querySelector('.profile-actions-right');
+    if (deleteAccountDiv) {
+        deleteAccountDiv.style.display = 'flex';
+    }
+    
     // Update title
     const title = document.querySelector('.main-content-title');
     if (title) {
@@ -35,6 +41,11 @@ export function enableEditMode() {
 }
 
 export function cancelEdit() {
+    // Hide delete account button before reload
+    const deleteAccountDiv = document.querySelector('.profile-actions-right');
+    if (deleteAccountDiv) {
+        deleteAccountDiv.style.display = 'none';
+    }
     window.location.reload();
 }
 

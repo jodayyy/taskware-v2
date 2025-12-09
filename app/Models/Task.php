@@ -49,6 +49,23 @@ class Task extends Model
     }
 
     /**
+     * Check if the task is overdue.
+     * A task is overdue if it has a due date in the past and is not completed.
+     */
+    public function isOverdue(): bool
+    {
+        if (!$this->due) {
+            return false;
+        }
+
+        if ($this->status === 'completed' || $this->completed_at) {
+            return false;
+        }
+
+        return $this->due->isPast();
+    }
+
+    /**
      * The "booted" method of the model.
      */
     protected static function booted(): void

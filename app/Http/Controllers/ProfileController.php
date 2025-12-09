@@ -57,4 +57,20 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.show')->with('success', 'Password changed successfully!');
     }
+
+    /**
+     * Delete the user's account.
+     */
+    public function delete(): RedirectResponse
+    {
+        $user = auth()->user();
+        
+        // Logout the user before deleting
+        auth()->logout();
+        
+        // Delete the user account
+        $user->delete();
+
+        return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
+    }
 }

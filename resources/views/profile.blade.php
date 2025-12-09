@@ -46,9 +46,19 @@
                     </div>
 
                     <div class="profile-actions {{ isset($editMode) && $editMode ? 'visible' : '' }}" id="profileActions">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
+                        <div class="profile-actions-left">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
+                        </div>
+                        <div class="profile-actions-right" style="display: {{ isset($editMode) && $editMode ? 'flex' : 'none' }};">
+                            <button type="button" class="btn btn-danger" data-delete-dialog="deleteAccountDialog" data-delete-form="delete-account-form">Delete Account</button>
+                        </div>
                     </div>
+                </form>
+                
+                <form id="delete-account-form" method="POST" action="{{ route('profile.delete') }}" class="inline-form" style="display: none;">
+                    @csrf
+                    @method('DELETE')
                 </form>
                 
                 <div class="profile-bottom-actions" id="profileBottomActions">
@@ -57,5 +67,13 @@
                         <a href="{{ route('profile.password.show') }}" class="btn btn-primary">Change Password</a>
                     @endif
                 </div>
+
+    <x-ui.delete-confirm-dialog 
+        id="deleteAccountDialog"
+        title="Delete Account"
+        message="Are you sure you want to delete your account? This action cannot be undone. All your data will be permanently deleted."
+        confirm-text="Delete Account"
+        cancel-text="Cancel"
+    />
 </x-layout.page>
 @endsection

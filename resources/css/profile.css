@@ -17,10 +17,18 @@
 }
 
 .profile-actions {
-    @apply hidden gap-4 mt-8;
+    @apply hidden mt-8;
 }
 
 .profile-actions.visible {
+    @apply flex justify-between items-center;
+}
+
+.profile-actions-left {
+    @apply flex gap-4;
+}
+
+.profile-actions-right {
     @apply flex;
 }
 

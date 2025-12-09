@@ -151,6 +151,26 @@
     @apply outline-[3px] outline-red-300 outline-offset-2;
 }
 
+.btn-danger {
+    @apply bg-red-500 text-white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-danger:hover:not(:disabled) {
+    @apply bg-red-600;
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-danger:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+.btn-danger:focus-visible {
+    @apply outline-[3px] outline-red-500 outline-offset-2;
+}
+
 .btn-block {
     @apply w-full;
 }

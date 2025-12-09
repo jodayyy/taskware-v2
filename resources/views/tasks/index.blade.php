@@ -27,7 +27,9 @@
                             <div class="task-card-right">
                                 <span class="priority-badge priority-{{ $task->priority }}">{{ ucfirst($task->priority) }}</span>
                                 <span class="status-badge status-{{ $task->status }}">{{ ucfirst(str_replace('-', ' ', $task->status)) }}</span>
-                                @if($task->due)
+                                @if($task->isOverdue())
+                                    <span class="due-badge due-overdue">Overdue</span>
+                                @elseif($task->due)
                                     <span class="due-badge">{{ $task->due->format('M j, Y g:i A') }}</span>
                                 @else
                                     <span class="due-badge due-none">No due date</span>

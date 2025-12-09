@@ -50,7 +50,11 @@
             </div>
             <div class="task-detail-inline-item">
                 <label class="task-detail-label">Due:</label>
-                <p class="task-detail-value">{{ $task->due ? $task->due->format('F j, Y g:i A') : 'No due date' }}</p>
+                @if($task->isOverdue())
+                    <span class="due-badge due-overdue">Overdue - {{ $task->due->format('F j, Y g:i A') }}</span>
+                @else
+                    <p class="task-detail-value">{{ $task->due ? $task->due->format('F j, Y g:i A') : 'No due date' }}</p>
+                @endif
             </div>
         </div>
 
